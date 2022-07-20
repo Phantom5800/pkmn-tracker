@@ -92,13 +92,13 @@ div.pkmn-box {
     width: 50px;
     height: 50px;
     text-align: center;
-    background-color: black;
+    /*background-color: black;*/
     margin: 2px 2px 2px 2px;
     border: rgba(0,0,0,0) 1px solid;
 }
 
 div.pkmn-box.planned {
-    background-color: rgba(0,0,128,0.5);
+    /*background-color: rgba(0,0,128,0.5);*/
     mix-blend-mode: luminosity;
     border: rgba(0,0,0,0)  1px solid;
 }
