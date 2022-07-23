@@ -417,6 +417,25 @@ select {
     height: 30px;
 }
 
+/* clock */
+div#clock {
+    background-color: rgb(1, 18, 14);
+    color: white;
+    font-size: 3em;
+    padding: 20px;
+    border-radius: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+div#time-tracker > select {
+    width: 75px;
+}
+
+div#time-tracker > button {
+    width: 75px;
+    height: 30px;
+}
+
 /* Loading Icon */
 .lds-ring {
     display: inline-block;

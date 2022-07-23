@@ -200,6 +200,126 @@ $(document).ready(function(){
     $("#section-color").val(section_color);
 
     setCurrentPokemon();
+
+    ////////////////////////////////////////////////////////////////
+    // on screen timer
+    ////////////////////////////////////////////////////////////////
+
+    var hourSelector = $("#hour-selector");
+    var minuteSelector = $("#minute-selector");
+    var secondSelector = $("#second-selector");
+    var hour = $("#hour");
+    var minute = $("#minute");
+    var second = $("#second");
+
+    var displayedTime = {
+        hour: 23,
+        minute: 33,
+        second: 0,
+    };
+
+    var lastDifference = 0;
+
+    var startTime = new Date().getTime();
+
+    var displayHour = () => {
+        var hourText = displayedTime.hour;
+        if (hourText < 10) {
+            hourText = "0" + hourText;
+        }
+        hour.text(hourText);
+    };
+
+    var displayMinute = () => {
+        var minuteText = displayedTime.minute;
+        if (minuteText < 10) {
+            minuteText = "0" + minuteText;
+        }
+        minute.text(minuteText);
+    };
+
+    var displaySecond = () => {
+        var secondText = displayedTime.second;
+        if (secondText < 10) {
+            secondText = "0" + secondText;
+        }
+        second.text(secondText);
+    };
+
+    var updateTimer = () => {
+        var time = new Date().getTime();
+        var difference = time - startTime;
+
+        difference -= difference % 1000;
+        difference /= 1000;
+
+        if (lastDifference === difference) {
+            return;
+        }
+
+        var toAddSeconds = difference - lastDifference;
+        var toAddMinutes = 0;
+        var toAddHours = 0;
+
+        var newSecond = displayedTime.second + toAddSeconds;
+        while (newSecond > 59) {
+            newSecond-= 60;
+            ++toAddMinutes;
+        }
+
+        if (newSecond !== displayedTime.second) {
+            displayedTime.second = newSecond;
+            displaySecond();
+        }
+
+        var newMinute = displayedTime.minute + toAddMinutes;
+        while (newMinute > 59) {
+            newMinute-= 60;
+            ++toAddHours;
+        }
+
+        if (newMinute !== displayedTime.minute) {
+            displayedTime.minute = newMinute;
+            displayMinute();
+        }
+
+        var newHour = displayedTime.hour + toAddHours;
+        while (newHour > 23) {
+            newHour-= 24;
+        }
+
+        if (newHour !== displayedTime.hour) {
+            displayedTime.hour = newHour;
+            displayHour();
+        }
+
+        lastDifference = difference;
+    };
+
+    displayHour();
+    displayMinute();
+    displaySecond();
+
+    setInterval(updateTimer, 50);
+
+    $("#time-tracker button").click(function() {
+        var hour = parseInt(hourSelector.val(), 10);
+        var minute = parseInt(minuteSelector.val(), 10);
+        var second = parseInt(secondSelector.val(), 10);
+
+        startTime = new Date().getTime();
+        lastDifference = 0;
+
+        displayedTime.hour = hour;
+        displayedTime.minute = minute;
+        displayedTime.second = second;
+
+        displayHour();
+        displayMinute();
+        displaySecond();
+
+        $(this).blur();
+    });
 });
 
 function resetPage() {
@@ -213,3 +333,4 @@ function resetPage() {
         }
     });
 }
+
